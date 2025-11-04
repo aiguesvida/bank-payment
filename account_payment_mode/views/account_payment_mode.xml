@@ -71,7 +71,7 @@
                     string="Outbound"
                     domain="[('payment_type', '=', 'outbound')]"
                 />
-                <group string="Group By" name="groupby">
+                <group name="groupby">
                     <filter
                         string="Payment Method"
                         name="payment_method_groupby"
@@ -89,7 +89,7 @@
     <menuitem
         id="account_payment_mode_menu"
         action="account_payment_mode_action"
-        parent="account.account_management_menu"
+        parent="account.menu_finance_configuration"
         sequence="25"
     />
 </odoo>
