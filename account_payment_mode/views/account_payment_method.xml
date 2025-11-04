@@ -71,7 +71,7 @@ here. I hate the objects that don't have a view... -->
     <menuitem
         id="account_payment_method_menu"
         action="account_payment_method_action"
-        parent="account.account_management_menu"
+        parent="account.menu_finance_configuration"
         sequence="30"
     />
 </odoo>
