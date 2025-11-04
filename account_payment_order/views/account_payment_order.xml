@@ -176,11 +176,8 @@
         <field name="model">account.payment.order</field>
         <field name="arch" type="xml">
             <search>
-                <field
-                    name="description"
-                    filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self)]"
-                    string="Name or Description"
-                />
+                <field name="name" />
+                <field name="description" />
                 <field name="journal_id" />
                 <filter
                     name="draft"
@@ -202,7 +199,7 @@
                     string="File Uploaded"
                     domain="[('state', '=', 'uploaded')]"
                 />
-                <group string="Group By" name="groupby">
+                <group name="groupby">
                     <filter
                         name="payment_mode_groupby"
                         string="Payment Mode"
