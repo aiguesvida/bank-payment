@@ -3,6 +3,7 @@
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
 
 
 class AccountPaymentLine(models.Model):
@@ -88,13 +89,16 @@ class AccountPaymentLine(models.Model):
         readonly=True,
     )
 
-    _sql_constraints = [
-        (
-            "name_company_unique",
-            "unique(name, company_id)",
-            "A payment line already exists with this reference in the same company!",
-        )
-    ]
+    @api.constrains("name", "company_id")
+    def _check_name_company_unique(self):
+        for rec in self:
+            if not rec.name:
+                continue
+            domain = [("name", "=", rec.name), ("company_id", "=", rec.company_id.id), ("id", "!=", rec.id)]
+            if self.search_count(domain):
+                raise ValidationError(
+                    "A payment line already exists with this reference in the same company!"
+                )
 
     @api.model_create_multi
     def create(self, vals_list):
