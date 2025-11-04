@@ -41,11 +41,8 @@ here. I hate the objects that don't have a view... -->
         <field name="model">account.payment.method</field>
         <field name="arch" type="xml">
             <search>
-                <field
-                    name="name"
-                    filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"
-                    string="Name or Code"
-                />
+                <field name="name" />
+                <field name="code" />
                 <filter
                     name="inbound"
                     string="Inbound"
@@ -56,7 +53,7 @@ here. I hate the objects that don't have a view... -->
                     string="Outbound"
                     domain="[('payment_type', '=', 'outbound')]"
                 />
-                <group string="Group By" name="groupby">
+                <group name="groupby">
                     <filter
                         string="Payment Type"
                         name="payment_type_groupby"
