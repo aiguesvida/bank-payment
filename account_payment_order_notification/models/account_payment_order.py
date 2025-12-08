@@ -17,10 +17,10 @@ class AccountPaymentOrder(models.Model):
     )
 
     def _compute_notification_count(self):
-        notification_data = self.env["account.payment.order.notification"].read_group(
-            [("order_id", "in", self.ids)], ["order_id"], ["order_id"]
+        notification_data = self.env["account.payment.order.notification"]._read_group(
+            [("order_id", "in", self.ids)], groupby=["order_id"], aggregates=["__count"]
         )
-        mapped_data = {r["order_id"][0]: r["order_id_count"] for r in notification_data}
+        mapped_data = {order.id: count for order, count in notification_data}
         for record in self:
             record.notification_count = mapped_data.get(record.id, 0)
 
