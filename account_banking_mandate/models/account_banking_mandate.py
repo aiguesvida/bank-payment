@@ -83,11 +83,10 @@ class AccountBankingMandate(models.Model):
     payment_line_ids_count = fields.Integer(compute="_compute_payment_line_ids_count")
 
     _sql_constraints = [
-        (
-            "mandate_ref_company_uniq",
-            "unique(unique_mandate_reference, company_id)",
-            "A Mandate with the same reference already exists for this company!",
-        )
+        models.UniqueConstraint(
+            fields=["unique_mandate_reference", "company_id"],
+            name="mandate_ref_company_uniq",
+        ),
     ]
 
     @api.depends("format")  # A field with default for triggering the compute
@@ -112,14 +111,12 @@ class AccountBankingMandate(models.Model):
     def _compute_payment_line_ids_count(self):
         payment_line_model = self.env["account.payment.line"]
         domain = [("mandate_id", "in", self.ids)]
-        res = payment_line_model.read_group(
-            domain=domain, fields=["mandate_id"], groupby=["mandate_id"]
+        res = payment_line_model._read_group(
+            domain=domain, groupby=["mandate_id"], aggregates=["__count"]
         )
         payment_line_dict = {}
-        for dic in res:
-            mandate_id = dic["mandate_id"][0]
-            payment_line_dict.setdefault(mandate_id, 0)
-            payment_line_dict[mandate_id] += dic["mandate_id_count"]
+        for mandate, count in res:
+            payment_line_dict[mandate.id] = count
         for rec in self:
             rec.payment_line_ids_count = payment_line_dict.get(rec.id, 0)
 
