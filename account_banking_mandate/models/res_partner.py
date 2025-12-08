@@ -18,13 +18,10 @@ class ResPartner(models.Model):
     )
 
     def _compute_mandate_count(self):
-        mandate_data = self.env["account.banking.mandate"].read_group(
-            [("partner_id", "in", self.ids)], ["partner_id"], ["partner_id"]
+        mandate_data = self.env["account.banking.mandate"]._read_group(
+            [("partner_id", "in", self.ids)], groupby=["partner_id"], aggregates=["__count"]
         )
-        mapped_data = {
-            mandate["partner_id"][0]: mandate["partner_id_count"]
-            for mandate in mandate_data
-        }
+        mapped_data = {partner.id: count for partner, count in mandate_data}
         for partner in self:
             partner.mandate_count = mapped_data.get(partner.id, 0)
 
