@@ -31,4 +31,5 @@
     ],
     "demo": ["demo/sepa_direct_debit_demo.xml"],
     "installable": True,
+    "pre_init_hook": "pre_init_hook",
 }
