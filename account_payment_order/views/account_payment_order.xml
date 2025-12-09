@@ -74,7 +74,7 @@
                         </button>
                     </div>
                     <div class="oe_title">
-                        <label for="name" class="oe_edit_only" />
+                        <label for="name" />
                         <h1>
                             <field name="name" />
                         </h1>
@@ -96,7 +96,7 @@
                                 name="company_id"
                                 groups="base.group_multi_company"
                             />
-                            <field name="payment_type" invisible="0" />
+                            <field name="payment_type" />
                             <field
                                 name="payment_count"
                                 invisible="state in ('draft', 'cancel')"
