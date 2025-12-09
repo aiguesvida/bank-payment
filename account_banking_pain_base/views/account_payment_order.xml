@@ -23,7 +23,7 @@
                     readonly="state not in ['draft','open']"
                 />
             </field>
-            <xpath expr="//group[@name='head']" position="before">
+            <header position="after">
                 <div
                     class="alert alert-warning"
                     role="alert"
@@ -35,7 +35,7 @@
                     target="_blank"
                 >SEPA zone</a>.
                 </div>
-            </xpath>
+            </header>
         </field>
     </record>
 </odoo>
