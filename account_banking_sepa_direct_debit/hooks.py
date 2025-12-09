@@ -6,13 +6,15 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-def pre_init_hook(cr):
+def pre_init_hook(env):
     """
     Check if the payment method 'sepa_direct_debit' already exists.
     If it exists but lacks the XML ID, create the XML ID to prevent UniqueViolation
     during data loading.
     Using raw SQL for robustness.
+    Odoo 19 passes 'env' to pre_init_hook.
     """
+    cr = env.cr
     code = "sepa_direct_debit"
     payment_type = "inbound"
     module = "account_banking_sepa_direct_debit"
