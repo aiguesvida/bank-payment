@@ -156,7 +156,6 @@
             </list>
         </field>
     </record>
-    <!--
     <record id="account_banking_mandate_search" model="ir.ui.view">
         <field name="name">account.banking.mandate.search</field>
         <field name="model">account.banking.mandate</field>
@@ -208,7 +207,6 @@
             </search>
         </field>
     </record>
-    -->
     <record id="mandate_action" model="ir.actions.act_window">
         <field name="name">Banking Mandates</field>
         <field name="res_model">account.banking.mandate</field>

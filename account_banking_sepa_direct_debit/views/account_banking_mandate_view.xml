@@ -72,7 +72,7 @@
     <record id="view_mandate_search" model="ir.ui.view">
         <field name="name">sdd.mandate.search</field>
         <field name="model">account.banking.mandate</field>
-        <field name="inherit_id" ref="account_banking_mandate.view_mandate_search" />
+        <field name="inherit_id" ref="account_banking_mandate.account_banking_mandate_search" />
         <field name="arch" type="xml">
             <filter name="expired" position="after">
                 <separator />
