@@ -157,7 +157,7 @@
         </field>
     </record>
     <record id="view_mandate_search" model="ir.ui.view">
-        <field name="name">view.mandate.search</field>
+        <field name="name">account.banking.mandate.search</field>
         <field name="model">account.banking.mandate</field>
         <field name="arch" type="xml">
             <search string="Search Banking Mandates">
