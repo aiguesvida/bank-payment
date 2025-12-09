@@ -69,6 +69,7 @@
             </field>
         </field>
     </record>
+    <!--
     <record id="view_mandate_search" model="ir.ui.view">
         <field name="name">sdd.mandate.search</field>
         <field name="model">account.banking.mandate</field>
@@ -106,4 +107,5 @@
             </filter>
         </field>
     </record>
+    -->
 </odoo>
