@@ -2,13 +2,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import logging
+from odoo import api, SUPERUSER_ID
 
 _logger = logging.getLogger(__name__)
 
 
-from odoo import api, SUPERUSER_ID
-
-def pre_init_hook(cr):
+def migrate(cr, version):
     """
     Check if the payment method 'sepa_direct_debit' already exists.
     If it exists but lacks the XML ID, create the XML ID to prevent UniqueViolation
@@ -30,7 +29,7 @@ def pre_init_hook(cr):
     ], limit=1)
 
     if payment_method:
-        _logger.info("Found existing payment method '%s' without XML ID. Creating XML ID '%s'.", code, xml_id)
+        _logger.info("Migration: Found existing payment method '%s' without XML ID. Creating XML ID '%s'.", code, xml_id)
         env["ir.model.data"].create({
             "module": "account_banking_sepa_direct_debit",
             "name": "sepa_direct_debit",
