@@ -160,49 +160,16 @@
         <field name="name">account.banking.mandate.search</field>
         <field name="model">account.banking.mandate</field>
         <field name="arch" type="xml">
-            <search string="Search Banking Mandates">
-                <field
-                    name="unique_mandate_reference"
-                    string="Reference or Partner"
-                    filter_domain="['|', ('unique_mandate_reference', 'ilike', self), ('partner_id', 'ilike', self)]"
-                />
+            <search>
+                <field name="unique_mandate_reference" />
                 <field name="partner_id" />
-                <filter
-                    name="draft"
-                    string="Draft"
-                    domain="[('state', '=', 'draft')]"
-                />
-                <filter
-                    name="valid"
-                    string="Valid"
-                    domain="[('state', '=', 'valid')]"
-                />
-                <filter
-                    name="expired"
-                    string="Expired"
-                    domain="[('state', '=', 'expired')]"
-                />
-                <filter
-                    name="cancel"
-                    string="Cancelled"
-                    domain="[('state', '=', 'cancel')]"
-                />
-                <group string="Group By" name="groupby">
-                    <filter
-                        name="state_groupby"
-                        string="State"
-                        context="{'group_by': 'state'}"
-                    />
-                    <filter
-                        name="signature_date_groupby"
-                        string="Signature Date"
-                        context="{'group_by': 'signature_date'}"
-                    />
-                    <filter
-                        name="partner_groupby"
-                        string="Partner"
-                        context="{'group_by': 'partner_id'}"
-                    />
+                <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]" />
+                <filter name="valid" string="Valid" domain="[('state', '=', 'valid')]" />
+                <filter name="expired" string="Expired" domain="[('state', '=', 'expired')]" />
+                <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]" />
+                <group expand="0" string="Group By">
+                    <filter name="state_groupby" string="State" context="{'group_by': 'state'}" />
+                    <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}" />
                 </group>
             </search>
         </field>
