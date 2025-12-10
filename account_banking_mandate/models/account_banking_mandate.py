@@ -82,9 +82,8 @@ class AccountBankingMandate(models.Model):
     )
     payment_line_ids_count = fields.Integer(compute="_compute_payment_line_ids_count")
 
-    _sql_constraints = [
-        (
-            "mandate_ref_company_uniq",
+    _constraints = [
+        models.Constraint(
             "unique(unique_mandate_reference, company_id)",
             "A Mandate with the same reference already exists for this company!",
         )
