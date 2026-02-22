@@ -183,6 +183,8 @@ class TestAccountPaymentPartner(BaseCommon):
                 "invoice_date": fields.Date.today(),
                 "move_type": "in_invoice",
                 "journal_id": cls.journal_purchase.id,
+                "payment_mode_id": cls.supplier_payment_mode.id,
+                "partner_bank_id": cls.supplier_bank.id,
             }
         )
         cls.product = cls.env["product.product"].create(
