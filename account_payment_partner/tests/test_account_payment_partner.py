@@ -464,12 +464,16 @@ class TestAccountPaymentPartner(BaseCommon):
     def test_onchange_payment_mode_id(self):
         mode = self.supplier_payment_mode
         mode.payment_method_id.bank_account_required = True
-        self.supplier_invoice.partner_bank_id = self.supplier_bank.id
-        self.supplier_invoice.payment_mode_id = mode.id
+        with Form(self.supplier_invoice) as f:
+            f.partner_bank_id = self.supplier_bank
+            f.payment_mode_id = mode
         self.assertEqual(self.supplier_invoice.partner_bank_id, self.supplier_bank)
+        
         mode.payment_method_id.bank_account_required = False
         self.assertEqual(self.supplier_invoice.partner_bank_id, self.supplier_bank)
-        self.supplier_invoice.payment_mode_id = False
+        
+        with Form(self.supplier_invoice) as f:
+            f.payment_mode_id = self.env["account.payment.mode"]
         self.assertFalse(self.supplier_invoice.partner_bank_id)
 
     def test_print_report(self):
