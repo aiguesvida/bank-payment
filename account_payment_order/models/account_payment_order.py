@@ -410,7 +410,7 @@ class AccountPaymentOrder(models.Model):
             {
                 "date_generated": fields.Date.context_today(self),
                 "state": "generated",
-                "generated_user_id": self._uid,
+                "generated_user_id": self.env.uid,
             }
         )
         return action

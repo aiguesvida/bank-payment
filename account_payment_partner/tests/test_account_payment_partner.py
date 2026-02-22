@@ -465,8 +465,8 @@ class TestAccountPaymentPartner(BaseCommon):
         mode = self.supplier_payment_mode
         mode.payment_method_id.bank_account_required = True
         with Form(self.supplier_invoice) as f:
-            f.partner_bank_id = self.supplier_bank
             f.payment_mode_id = mode
+            f.partner_bank_id = self.supplier_bank
         self.assertEqual(self.supplier_invoice.partner_bank_id, self.supplier_bank)
         
         mode.payment_method_id.bank_account_required = False
