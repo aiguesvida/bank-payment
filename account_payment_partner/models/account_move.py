@@ -97,13 +97,13 @@ class AccountMove(models.Model):
             payment_mode = move.payment_mode_id
             if payment_mode:
                 if (
-                    move.move_type == "in_invoice"
+                    move.move_type in ("in_invoice", "out_refund")
                     and payment_mode.payment_type == "outbound"
                     and not payment_mode.payment_method_id.bank_account_required
                 ):
                     move.partner_bank_id = False
                     continue
-                elif move.move_type == "out_invoice":
+                elif move.move_type in ("out_invoice", "in_refund"):
                     if payment_mode.payment_method_id.bank_account_required:
                         if (
                             payment_mode.bank_account_link == "fixed"
