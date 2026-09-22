@@ -79,6 +79,11 @@ class TestAccountPaymentPurchase(TransactionCase):
 
         # Synthetic identity/key exist only in this rolled-back test transaction.
         self.env.user.partner_id.vat = "ES12345678Z"
+        # The COMA cover is a minor-contract file: type and need are required.
+        purchase.write({
+            "vida_nature": "supply",
+            "vida_need": "Test purchase for payment mode propagation.",
+        })
         self.env.user.group_ids |= self.env.ref("purchase.group_purchase_manager")
         # TransactionCase has no free HTTP worker for wkhtmltopdf asset requests.
         # Isolate rendering only; keep the actual PDF signing/validation below.
