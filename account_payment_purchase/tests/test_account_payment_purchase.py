@@ -4,6 +4,7 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 import base64
+from unittest.mock import patch
 
 from odoo import Command
 from odoo.tests import Form, TransactionCase, tagged
@@ -71,6 +72,7 @@ class TestAccountPaymentPurchase(TransactionCase):
         if "vida.purchase.approval" not in self.env.registry:
             return purchase.button_confirm()
         from odoo.addons.vida_purchase_contract.tests.signature_fixtures import (
+            blank_pdf,
             make_pki,
             sign_pdf,
         )
@@ -78,7 +80,14 @@ class TestAccountPaymentPurchase(TransactionCase):
         # Synthetic identity/key exist only in this rolled-back test transaction.
         self.env.user.partner_id.vat = "ES12345678Z"
         self.env.user.group_ids |= self.env.ref("purchase.group_purchase_manager")
-        action = purchase.button_confirm()
+        # TransactionCase has no free HTTP worker for wkhtmltopdf asset requests.
+        # Isolate rendering only; keep the actual PDF signing/validation below.
+        with patch.object(
+            type(self.env["ir.actions.report"]),
+            "_render_qweb_pdf",
+            return_value=(blank_pdf(), "pdf"),
+        ):
+            action = purchase.button_confirm()
         self.assertEqual(action["tag"], "vida_purchase_contract.autofirma")
         self.assertIn(purchase.state, ("draft", "sent"))
         approval = purchase.vida_approval_id
